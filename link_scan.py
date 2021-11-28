@@ -1,6 +1,7 @@
 from typing import List
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium import webdriver
+import urllib.error, urllib.request
 import sys
 
 
@@ -26,19 +27,31 @@ def get_links(url):
     return llist
 
 
-def is_valid_url(url: str):
+def is_valid_url(url: str) -> bool:
     """Check if the url is valid and reachable.
+
     Returns:
         True if the URL is OK, False otherwise.
     """
-    pass
+    try:
+        urllib.request.urlopen(url)
+        return True
+    except urllib.error.HTTPError:
+        return False
 
 
 def invalid_urls(urllist: List[str]) -> List[str]:
     """Validate the urls in urllist and return a new list containing
     the invalid or unreachable urls.
     """
+    inavlid_urls_list = []
+    for url in urllist:
+        if not is_valid_url(url):
+            inavlid_urls_list.append(url)
+    return inavlid_urls_list
 
 
 if __name__ == "__main__":
     browser: WebDriver = webdriver.Chrome(r'C:\Users\hanat\PycharmProjects\pythonProject\link_scanner\chromedriver.exe')
+    url = sys.argv[1]
+    link_list = get_links(url)
