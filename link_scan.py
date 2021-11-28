@@ -1,6 +1,7 @@
-from typing import List
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium import webdriver
+import urllib
+from typing import List
 import urllib.error, urllib.request
 import sys
 
@@ -55,3 +56,11 @@ if __name__ == "__main__":
     browser: WebDriver = webdriver.Chrome(r'C:\Users\hanat\PycharmProjects\pythonProject\link_scanner\chromedriver.exe')
     url = sys.argv[1]
     link_list = get_links(url)
+    bad_link = invalid_urls(link_list)
+    print('All of good links')
+    for each_url in link_list:
+        print(each_url)
+    print('All of bad links')
+    for each_url in bad_link:
+        print(each_url)
+    browser.quit()
